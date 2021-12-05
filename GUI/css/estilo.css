@@ -1,0 +1,16 @@
+.avatar{
+    width:20%;
+}
+
+.column {
+    flex: 30%;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+}
+
+.center-text{
+    text-align: center;
+}
