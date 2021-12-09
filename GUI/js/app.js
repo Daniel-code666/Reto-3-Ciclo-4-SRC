@@ -13,9 +13,8 @@ $("#login").click(function(){
             success: function(response){
                 console.log(response);
                 if (response.id != null){
-                    localStorage.setItem("IdUser", response.id)
-
                     if (response.type == 'COORD'){
+                        localStorage.setItem("IdCoord", response.id)
                         alert("Bienvenido " + response.name);
                         document.getElementById('email').value = '';
                         document.getElementById('contrasena').value = '';
@@ -23,6 +22,7 @@ $("#login").click(function(){
                     }
                     
                     if (response.type == 'ADMIN'){
+                        localStorage.setItem("IdAdmin", response.id)
                         alert("Bienvenido " + response.name);
                         document.getElementById('email').value = '';
                         document.getElementById('contrasena').value = '';
@@ -30,6 +30,7 @@ $("#login").click(function(){
                     }
 
                     if (response.type == 'ASE'){
+                        localStorage.setItem("IdAse", response.id)
                         alert("Bienvenido " + response.name);
                         document.getElementById('email').value = '';
                         document.getElementById('contrasena').value = '';

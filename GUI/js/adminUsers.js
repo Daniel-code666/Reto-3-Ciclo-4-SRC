@@ -2,6 +2,7 @@ var endpoint = "http://129.151.116.250:8080/api/user";
 $(document).ready(function () {
     $("#alerta").hide()
     getClient()
+    getUser()
     $("#actualizar").click(function () {
         if($("#id").val() == "" || $("#identification").val() == "" || $("#name").val() == "" 
             || $("#address").val() == "" || $("#cellPhone").val() == "" || $("#email").val() == ""
@@ -29,6 +30,36 @@ $(document).ready(function () {
         }
     })
 })
+
+function getUser() {
+    $.ajax({
+        url: endpoint + "/" + localStorage.getItem("IdAdmin"),
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var $row = $('<tr>');
+            $row.append($('<td>').text(data.identification));
+            $row.append($('<td>').text(data.name));
+            $row.append($('<td>').text(data.email));
+            switch(data.type){
+                case 'COORD':
+                    $row.append($('<td>').text('Cordinador de zona'));
+                    break;
+                case 'ADM':
+                    $row.append($('<td>').text('Administrador'));
+                    break;
+                case 'ASE':
+                    $row.append($('<td>').text('Asesor comercial'));
+                    break;
+                default:
+                    $row.append($('<td>').text('Perfil no definido'));
+                    break;
+            }
+            $row.append($('<td>').text(data.zone));
+            $("#contenido").append($row);
+        }
+    })
+}
 
 function getClient() {
     $.ajax({
@@ -157,9 +188,7 @@ function putClient() {
 }
 
 function eliminar(id) {
-
     $.ajax({
-
         url: endpoint + "/" + id,
         type: 'DELETE',
         dataType: 'json',
@@ -167,6 +196,10 @@ function eliminar(id) {
         complete: function (data) {
             getClient()
         }
-
     })
 }
+
+$("#logout").click(function(){
+    localStorage.removeItem("IdAdmin")
+    window.location.href = 'index.html';
+})
